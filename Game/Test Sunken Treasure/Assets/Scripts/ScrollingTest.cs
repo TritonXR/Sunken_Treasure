@@ -16,7 +16,7 @@ public class ScrollingTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float scrollSpeed = 0.25f;
+        float scrollSpeed = 1;
         float offset =  (Time.time * scrollSpeed) / 1000.0f;
         landRender.material.SetTextureOffset("_BaseMap", new Vector2(offset, offset));
     }

@@ -24,9 +24,9 @@ using UnityEngine;
 public class OVRGrabber : MonoBehaviour
 {
     // Grip trigger thresholds for picking up objects, with some hysteresis.
-    public float grabBegin = 0.01f;
-    public float grabEnd = 0.0f;
-
+    public float grabBegin = 0.5f;
+    public float grabEnd = 0.3f;
+    public GameObject trueParent = null;
     bool alreadyUpdated = false;
 
     // Demonstrates parenting the held object to the hand's transform when grabbed.
@@ -369,7 +369,14 @@ public class OVRGrabber : MonoBehaviour
     protected void GrabbableRelease(Vector3 linearVelocity, Vector3 angularVelocity)
     {
         m_grabbedObj.GrabEnd(linearVelocity, angularVelocity);
-        if(m_parentHeldObject) m_grabbedObj.transform.parent = null;
+        if (m_parentHeldObject)
+        {
+            m_grabbedObj.transform.parent = trueParent.transform;
+            if(m_grabbedObj.tag != "GameController")
+            {
+                m_grabbedObj.GetComponent<Rigidbody>().isKinematic = false;
+            }
+        }
         SetPlayerIgnoreCollision(m_grabbedObj.gameObject, false);
         m_grabbedObj = null;
     }

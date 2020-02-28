@@ -36,10 +36,12 @@ public class OVRGrabbable : MonoBehaviour
     protected bool m_grabbedKinematic = false;
     protected Collider m_grabbedCollider = null;
     protected OVRGrabber m_grabbedBy = null;
+    protected bool reGrab = false;
+    protected bool endedGrab = false;
 
-	/// <summary>
-	/// If true, the object can currently be grabbed.
-	/// </summary>
+    /// <summary>
+    /// If true, the object can currently be grabbed.
+    /// </summary>
     public bool allowOffhandGrab
     {
         get { return m_allowOffhandGrab; }
@@ -130,6 +132,9 @@ public class OVRGrabbable : MonoBehaviour
         rb.angularVelocity = angularVelocity;
         m_grabbedBy = null;
         m_grabbedCollider = null;
+        //reGrab = false;
+        //endedGrab = true;
+        //print("bam");
     }
 
     void Awake()
@@ -159,6 +164,34 @@ public class OVRGrabbable : MonoBehaviour
         {
             // Notify the hand to release destroyed grabbables
             m_grabbedBy.ForceRelease(this);
+        }
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        String obj_Tag = collision.gameObject.transform.parent.parent.parent.tag;
+        if (obj_Tag == "Player")
+        {
+            this.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+            //print("bish");
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    public void OnCollisionExit(Collision collision)
+    {
+
+        if (this.gameObject.tag != "GameController")
+        {
+            this.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+            //print("bosh");
+        }
+        else
+        {
+            return;
         }
     }
 }
