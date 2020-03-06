@@ -95,7 +95,7 @@ namespace Leap.Unity.Interaction {
     public bool isPressed { get { return _isPressed; } }
     [Obsolete("Deprecated. Use isPressed instead.", false)]
     public bool isDepressed { get { return _isPressed; } }
-
+    //public bool isOculus = false;
     protected bool _pressedThisFrame = false;
     /// <summary>
     /// Gets whether the button was pressed during this Update frame.
@@ -123,11 +123,11 @@ namespace Leap.Unity.Interaction {
     [Obsolete("Deprecated. Use pressedAmount instead.", false)]
     public float depressedAmount { get { return _pressedAmount; } }
 
-
+    public bool buttonUp = true;
     /// <summary>
     /// The initial position of this element in local space, stored on Start().
     /// </summary>
-    protected Vector3 initialLocalPosition;
+        protected Vector3 initialLocalPosition;
 
     /// <summary>
     /// The physical position of this element in local space; may diverge from the
@@ -294,6 +294,7 @@ namespace Leap.Unity.Interaction {
           Vector3 origLocalDepressorPos = transform.parent.InverseTransformPoint(transform.TransformPoint(_localDepressorPosition));
           localPhysicsVelocity = Vector3.back * 0.05f;
           localPhysicsPosition = constrainDepressedLocalPosition(curLocalDepressorPos - origLocalDepressorPos);
+          //print("BANANA");
         }
         else if (isGrasped) {
           // Do nothing!
@@ -353,6 +354,9 @@ namespace Leap.Unity.Interaction {
           if ((isPrimaryHovered && _lastDepressor != null) || isGrasped) {
             _isPressed = true;
           }
+          /*else if (isOculus){
+            _isPressed = true;
+          }*/
           else {
             physicsPosition = transform.parent.TransformPoint(new Vector3(localPhysicsPosition.x, localPhysicsPosition.y, initialLocalPosition.z - minMaxHeight.x));
             _physicsVelocity = _physicsVelocity * 0.1f;
@@ -430,7 +434,25 @@ namespace Leap.Unity.Interaction {
       }
     }
 
-    protected virtual void OnCollisionEnter(Collision collision) { trySetDepressor(collision.collider); }
+    protected virtual void OnCollisionEnter(Collision collision) {
+      trySetDepressor(collision.collider);
+      //_unpressedThisFrame = true;
+      //print(pressedAmount);
+      //print(depressedAmount);
+      //print(initialLocalPosition.z - minMaxHeight.x);
+      if (pressedAmount >= 0.9 && buttonUp){
+        //this.transform.gameObject.SetActive(false);
+        OnPress();
+        buttonUp = false;
+      }
+    }
+    
+    protected virtual void OnCollisionExit(Collision collision){
+       if (pressedAmount == 0 && buttonUp == false){
+         buttonUp = true;
+       }
+    }
+
     protected virtual void OnCollisionStay(Collision collision) { trySetDepressor(collision.collider); }
 
     // during Soft Contact, controller colliders are triggers
@@ -497,7 +519,7 @@ namespace Leap.Unity.Interaction {
       SetMaxHeight(maxHeight);
     }
 
-    #endregion
+        #endregion
 
-  }
+    }
 }
