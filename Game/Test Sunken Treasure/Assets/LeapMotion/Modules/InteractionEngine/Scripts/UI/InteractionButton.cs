@@ -83,7 +83,8 @@ namespace Leap.Unity.Interaction {
     [FormerlySerializedAs("OnUnpress")]
     private UnityEvent _OnUnpress = new UnityEvent();
 
-    public Action OnPress = () => { };
+    public Action OnPress = () => {
+    };
     public Action OnUnpress = () => { };
 
     #endregion
