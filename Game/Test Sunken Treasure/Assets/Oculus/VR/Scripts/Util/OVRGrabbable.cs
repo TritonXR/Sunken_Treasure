@@ -186,7 +186,7 @@ public class OVRGrabbable : MonoBehaviour
 
         if (this.gameObject.tag != "GameController")
         {
-            this.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+            //this.gameObject.GetComponent<Rigidbody>().isKinematic = false;
             //print("bosh");
         }
         else

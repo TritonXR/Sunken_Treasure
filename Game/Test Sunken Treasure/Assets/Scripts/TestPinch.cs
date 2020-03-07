@@ -16,10 +16,10 @@ public class TestPinch : MonoBehaviour
     {
         var hand = GetComponent<OVRHand>();
         var bone = GetComponent<OVRSkeleton>();
-        float indexFingerPinchStrength = hand.GetFingerPinchStrength(OVRHand.HandFinger.Thumb);
+        float indexFingerPinchStrength = hand.GetFingerPinchStrength(OVRHand.HandFinger.Index);
         float middleFingerPinchStrength = hand.GetFingerPinchStrength(OVRHand.HandFinger.Middle);
         float ringFingerPinchStrength = hand.GetFingerPinchStrength(OVRHand.HandFinger.Ring);
-        //print(indexFingerPinchStrength);
+        print(indexFingerPinchStrength);
     }
 
 
