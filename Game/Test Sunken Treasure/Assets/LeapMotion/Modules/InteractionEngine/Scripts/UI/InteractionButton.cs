@@ -261,6 +261,7 @@ namespace Leap.Unity.Interaction {
       // Disable collision on this button if it is not the primary hover.
       ignoreGrasping = _initialIgnoreGrasping ? true : !isPrimaryHovered && !isGrasped;
       ignoreContact = (!isPrimaryHovered || isGrasped) || !controlEnabled;
+ 
 
       // Enforce local rotation (if button is child of non-kinematic rigidbody,
       // this is necessary).

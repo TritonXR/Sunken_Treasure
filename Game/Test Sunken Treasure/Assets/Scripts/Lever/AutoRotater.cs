@@ -29,7 +29,7 @@ public class AutoRotater : MonoBehaviour
         Vector3 trueLookVector = new Vector3(0, Mathf.Cos(clamped), Mathf.Sin(clamped));
         Quaternion trueLookRotation = Quaternion.LookRotation(trueLookVector, Vector3.up);
         gameObject.transform.rotation = trueLookRotation;
-        Debug.Log(value);
+
 
     }
 

@@ -9,6 +9,8 @@ public class ChassisController : MonoBehaviour
 
     public static float SPEED = 1F;
 
+    public HingeJoint verticalLever;
+
     private float rotationX;
     private float rotationY;
 
@@ -25,9 +27,11 @@ public class ChassisController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(verticalLever.angle);
         float horiz = Input.GetAxis("ArrowHoriz");
         float vertical = Input.GetAxis("ArrowVertical");
-
+        vertical = verticalLever.angle / -60f;
+        
         Debug.Log(rotationY);
         bool throttle = Input.GetKey("space");
 
