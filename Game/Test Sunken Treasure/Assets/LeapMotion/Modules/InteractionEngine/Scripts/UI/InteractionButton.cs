@@ -442,7 +442,7 @@ namespace Leap.Unity.Interaction {
       //print(pressedAmount);
       //print(depressedAmount);
       //print(initialLocalPosition.z - minMaxHeight.x);
-      if (pressedAmount >= 0.9 && buttonUp){
+      if (pressedAmount >= 0.5 && buttonUp){
         //this.transform.gameObject.SetActive(false);
         OnPress();
         buttonUp = false;
@@ -450,7 +450,7 @@ namespace Leap.Unity.Interaction {
     }
     
     protected virtual void OnCollisionExit(Collision collision){
-       if (pressedAmount == 0 && buttonUp == false){
+       if (pressedAmount <= 0.2 && buttonUp == false){
          buttonUp = true;
        }
     }

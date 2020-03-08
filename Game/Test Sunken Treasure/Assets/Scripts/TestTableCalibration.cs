@@ -5,8 +5,10 @@ using UnityEngine;
 public class TestTableCalibration : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject table;
-    public Vector3 tablePosition;
+    public GameObject tableHeight;
+    public GameObject tableDistance;
+    public Vector3 tablePositionHeight;
+    public Vector3 tablePositionDistance;
 
     void Start()
     {
@@ -16,11 +18,13 @@ public class TestTableCalibration : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        tablePosition = table.transform.position;
+        tablePositionHeight = tableDistance.transform.position;
+        tablePositionDistance = tableDistance.transform.position;
     }
 
     private void LateUpdate()
     {
-        PlayerPrefs.SetFloat("Height", tablePosition.y);
+        PlayerPrefs.SetFloat("Height", tablePositionHeight.y);
+        PlayerPrefs.SetFloat("Distance", tablePositionDistance.z);
     }
 }

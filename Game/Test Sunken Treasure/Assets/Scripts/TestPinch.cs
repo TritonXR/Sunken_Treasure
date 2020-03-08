@@ -19,7 +19,7 @@ public class TestPinch : MonoBehaviour
         float indexFingerPinchStrength = hand.GetFingerPinchStrength(OVRHand.HandFinger.Index);
         float middleFingerPinchStrength = hand.GetFingerPinchStrength(OVRHand.HandFinger.Middle);
         float ringFingerPinchStrength = hand.GetFingerPinchStrength(OVRHand.HandFinger.Ring);
-        print(indexFingerPinchStrength);
+        //print(indexFingerPinchStrength);
     }
 
 

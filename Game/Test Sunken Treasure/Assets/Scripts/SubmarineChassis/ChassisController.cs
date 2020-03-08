@@ -27,12 +27,12 @@ public class ChassisController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(verticalLever.angle);
+        //Debug.Log(verticalLever.angle);
         float horiz = Input.GetAxis("ArrowHoriz");
         float vertical = Input.GetAxis("ArrowVertical");
-        vertical = verticalLever.angle / -60f;
+        //vertical = verticalLever.angle / -60f;
         
-        Debug.Log(rotationY);
+        //Debug.Log(rotationY);
         bool throttle = Input.GetKey("space");
 
         if(Input.GetKey("e")) {
