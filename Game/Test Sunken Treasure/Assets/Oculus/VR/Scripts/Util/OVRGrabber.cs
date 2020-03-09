@@ -73,7 +73,7 @@ public class OVRGrabber : MonoBehaviour
     protected Quaternion m_grabbedObjectRotOff;
 	protected Dictionary<OVRGrabbable, int> m_grabCandidates = new Dictionary<OVRGrabbable, int>();
 	protected bool m_operatingWithoutOVRCameraRig = true;
-
+    public bool leverGrabbed = false;
     /// <summary>
     /// The currently grabbed object.
     /// </summary>
@@ -102,9 +102,10 @@ public class OVRGrabber : MonoBehaviour
         if(!m_moveHandPosition)
         {
 		    // If we are being used with an OVRCameraRig, let it drive input updates, which may come from Update or FixedUpdate.
-		    OVRCameraRig rig = transform.GetComponentInParent<OVRCameraRig>();
+		    OVRCameraRig rig = transform.parent.parent.GetComponent<OVRCameraRig>();
 		    if (rig != null)
 		    {
+                //print("babushka");
 			    rig.UpdatedAnchors += (r) => {OnUpdatedAnchors();};
 			    m_operatingWithoutOVRCameraRig = false;
 		    }
@@ -135,12 +136,17 @@ public class OVRGrabber : MonoBehaviour
     virtual public void Update()
     {
         alreadyUpdated = false;
+        if (leverGrabbed)
+        {
+            m_grabbedObj.transform.localRotation = new Quaternion(transform.rotation.z, 0f, 0f, transform.rotation.w);
+        }
     }
 
     virtual public void FixedUpdate()
 	{
 		if (m_operatingWithoutOVRCameraRig)
         {
+            //print("Yare Yare");
 		    OnUpdatedAnchors();
         }
 	}
@@ -294,7 +300,10 @@ public class OVRGrabber : MonoBehaviour
             else
             {
                 Vector3 relPos = m_grabbedObj.transform.position - transform.position;
+                //Vector3 relPos = m_grabbedObj.transform.localPosition - transform.localPosition;
                 relPos = Quaternion.Inverse(transform.rotation) * relPos;
+                //relPos = Quaternion.Inverse(transform.localRotation) * relPos;
+
                 m_grabbedObjectPosOff = relPos;
             }
 
@@ -309,17 +318,30 @@ public class OVRGrabber : MonoBehaviour
             else
             {
                 Quaternion relOri = Quaternion.Inverse(transform.rotation) * m_grabbedObj.transform.rotation;
+                //Quaternion relOri = Quaternion.Inverse(transform.localRotation) * m_grabbedObj.transform.localRotation;
+
                 m_grabbedObjectRotOff = relOri;
+                //print(relOri);
             }
 
             // Note: force teleport on grab, to avoid high-speed travel to dest which hits a lot of other objects at high
             // speed and sends them flying. The grabbed object may still teleport inside of other objects, but fixing that
             // is beyond the scope of this demo.
-            MoveGrabbedObject(m_lastPos, m_lastRot, true);
+            MoveGrabbedObject(m_lastPos, m_lastRot, false);
             SetPlayerIgnoreCollision(m_grabbedObj.gameObject, true);
             if (m_parentHeldObject)
             {
-                m_grabbedObj.transform.parent = transform;
+                //print("Banana");
+                if (m_grabbedObj.tag != "GameController")
+                {
+                    m_grabbedObj.transform.parent = transform;
+                }
+                else
+                {
+                   leverGrabbed = true;
+                   //m_grabbedObj.transform.localRotation = new Quaternion (transform.rotation.z, 0f, 0f, transform.rotation.w);
+                   //m_grabbedObj.transform.parent = transform;
+                }
             }
         }
     }
@@ -334,6 +356,7 @@ public class OVRGrabber : MonoBehaviour
         Rigidbody grabbedRigidbody = m_grabbedObj.grabbedRigidbody;
         Vector3 grabbablePosition = pos + rot * m_grabbedObjectPosOff;
         Quaternion grabbableRotation = rot * m_grabbedObjectRotOff;
+
 
         if (forceTeleport)
         {
@@ -351,7 +374,12 @@ public class OVRGrabber : MonoBehaviour
     {
         if (m_grabbedObj != null)
         {
-			OVRPose localPose = new OVRPose { position = m_controller.transform.localPosition, orientation = m_controller.transform.localRotation };
+            /*if (m_grabbedObj.tag == "GameController")
+            {
+                print("BWOOSH");
+            }*/
+            leverGrabbed = false;
+            OVRPose localPose = new OVRPose { position = m_controller.transform.localPosition, orientation = m_controller.transform.localRotation };
             OVRPose offsetPose = new OVRPose { position = m_anchorOffsetPosition, orientation = m_anchorOffsetRotation };
             localPose = localPose * offsetPose;
 
@@ -374,7 +402,7 @@ public class OVRGrabber : MonoBehaviour
             m_grabbedObj.transform.parent = trueParent.transform;
             if(m_grabbedObj.tag != "GameController")
             {
-                m_grabbedObj.GetComponent<Rigidbody>().isKinematic = false;
+               // m_grabbedObj.GetComponent<Rigidbody>().isKinematic = false;
             }
         }
         SetPlayerIgnoreCollision(m_grabbedObj.gameObject, false);

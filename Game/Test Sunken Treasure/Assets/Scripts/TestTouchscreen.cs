@@ -24,6 +24,7 @@ public class TestTouchscreen : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
+        //-this.transform.position.x
         slider.transform.localPosition = new Vector3(/*-slider.transform.position.x +*/ (collision.GetContact(0).point.x - this.transform.position.x) / 0.2193545f, 
                                                      /*-slider.transform.position.y +*/ (collision.GetContact(0).point.y - this.transform.position.y) / 0.171671f, 
                                                      slider.transform.localPosition.z);

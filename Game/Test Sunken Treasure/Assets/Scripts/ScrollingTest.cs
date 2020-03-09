@@ -17,7 +17,7 @@ public class ScrollingTest : MonoBehaviour
     void Update()
     {
         float scrollSpeed = 1;
-        float offset =  (Time.time * scrollSpeed) / 1000.0f;
+        float offset =  (Time.time * scrollSpeed) / 1001.0f;
         landRender.material.SetTextureOffset("_BaseMap", new Vector2(offset, offset));
     }
 }

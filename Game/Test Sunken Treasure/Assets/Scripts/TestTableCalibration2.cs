@@ -11,6 +11,8 @@ public class TestTableCalibration2 : MonoBehaviour
     public GameObject buttons;
     public GameObject lever;
     public GameObject leverAnchor;
+    public GameObject map;
+    public GameObject sphere;
     void Start()
     {
 
@@ -18,8 +20,10 @@ public class TestTableCalibration2 : MonoBehaviour
         calibratedDistance = PlayerPrefs.GetFloat("Distance");
         table.transform.localPosition = new Vector3(table.transform.localPosition.x, calibratedHeight, calibratedDistance - 0.035f);
         buttons.transform.localPosition = new Vector3(buttons.transform.localPosition.x, calibratedHeight + 0.7f, calibratedDistance - 0.3f);
-        lever.transform.localPosition = new Vector3(lever.transform.localPosition.x, calibratedHeight + 0.5f, calibratedDistance - 0.35f);
-        leverAnchor.transform.localPosition = new Vector3(leverAnchor.transform.localPosition.x, calibratedHeight + 0.5f, calibratedDistance - 0.35f);
+        lever.transform.localPosition = new Vector3(lever.transform.localPosition.x, calibratedHeight + 0.5f, calibratedDistance - 0.5f);
+        leverAnchor.transform.localPosition = new Vector3(leverAnchor.transform.localPosition.x, calibratedHeight + 0.5f, calibratedDistance - 0.5f);
+        map.transform.localPosition = new Vector3(map.transform.localPosition.x, calibratedHeight + 0.7f, calibratedDistance - 0.5f);
+        sphere.transform.localPosition = new Vector3(sphere.transform.localPosition.x, calibratedHeight + 0.7f, calibratedDistance - 0.5f);
     }
 
     // Update is called once per frame
