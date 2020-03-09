@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/TestLeapMotion.unity
+    guid: 8c67d2313d84d2c48a59bf0b4659bebd
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: d1c3109bdb54ad54c8a2b2838528e640
-  - enabled: 0
-    path: Assets/Scenes/Scene1.unity
-    guid: 668d9c9213442b0448f1e2df6d17dcfa
   m_configObjects: {}
