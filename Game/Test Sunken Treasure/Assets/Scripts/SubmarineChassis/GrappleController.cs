@@ -19,7 +19,7 @@ public class GrappleController : MonoBehaviour
     void Update()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit)) {
+        if (Physics.Raycast(transform.position, transform.rotation * Vector3.forward, out hit)) {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
             Debug.Log(hit.transform.gameObject);
             if(hit.transform.gameObject.tag == "Target") {
@@ -29,6 +29,8 @@ public class GrappleController : MonoBehaviour
             } else {
                 lr.enabled = false;
             }
+        } else {
+            lr.enabled = false;
         }
         if (Input.GetKeyDown("q")) {
             FireGrapple();
