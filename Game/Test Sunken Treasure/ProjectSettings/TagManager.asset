@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - ControlPoint
+  - Target
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - InsideSub
   - OutsideSub
   - InteractableTerrain
-  - 
+  - Target
   - 
   - 
   - 

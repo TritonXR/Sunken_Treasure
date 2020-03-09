@@ -21,6 +21,7 @@ public class ChassisController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        rb.centerOfMass = Vector3.zero;
         originalRotation = rb.rotation;
     }
 
